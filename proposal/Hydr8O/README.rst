@@ -28,7 +28,8 @@ To achieve the goal of the project, the whole procedure divided into two major s
  1. Edge detection - getting image edges.
  
  2. Contour detection - detecting contours based on the edges.
- 3. Image warping - warping an image to get the top-down view for the text retrieval.
+ 3. Corner points detection -detecting the corner points of paper.
+ 4. Image warping - warping an image to get the top-down view for the text retrieval.
 
 
 2. Textual data retrieval.
@@ -61,16 +62,16 @@ Software consists of 5 modules each responsible for its own task:
  
 2. EdgeDetector - edge detection in an image.
  
-3. ContourDetector - contour detection in an image.
+3. CornerPointExtractor - corner point detection of a document in an image.
  
 4. DocumentWarper - extract document from an image and warp it so that it is in a top-down view. Calls functions from 1-3. Stores results of 1-3 for debugging purposes.
  
-5. TextRetriever - retrieve text information from an image.
+5. TextExtractor - retrieve text information from an image.
 
 API Description
 ===============
  
-Pipeline: Image -> ImagePreprocessor -> EdgeDetector -> ContourDetector -> DocumentWarper -> TextRetriever
+Pipeline: Image -> ImagePreprocessor -> EdgeDetector -> CornerPointExtractor -> DocumentWarper -> TextExtractor
  
 Usage example:
 
@@ -82,11 +83,11 @@ top_down_view_document = document_warper.warp()
  
  edge_image = document_warper.get_edge_image() #for debugging
  
- contour_image = document_warper.get_contour_image() #for debugging
+ contour_image = document_warper.get_corner_point_image() #for debugging
 
-text_retriever = TextRetriever(top_down_view_document)
+text_retriever = TextExtractor(top_down_view_document)
 
-text = text_retriever.retrieve()
+text = text_retriever.extract_text()
 
 Engineering Infrastructure
 ==========================
@@ -95,7 +96,7 @@ Build system will leverage make tool and pybind.
 
 Testing will be conducted using pytest.
 
-Documentation will be created and formated using Sphinx.
+Documentation will be created in the project repository https://github.com/Hydr8O/text-extractor in README section.
 
 New version will be released after completion of major steps, namely:
 
